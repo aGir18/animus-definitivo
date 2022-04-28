@@ -1,0 +1,3 @@
+rootProject.name = 'animus-lucrandi'
+
+includeFlat '000.libreria-animus'

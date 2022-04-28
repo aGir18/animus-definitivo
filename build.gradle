@@ -1,0 +1,62 @@
+plugins {
+	id 'org.springframework.boot' version '2.6.7'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+    id 'java-library'
+    id 'eclipse'
+	id 'application'
+}
+
+group = 'es.proyecto'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+
+	jcenter()
+    
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+	implementation 'com.github.aGir18:animus-lucrandi-libreria-externa:39938ac316'
+	
+	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	implementation 'org.springframework.boot:spring-boot-starter-web-services'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	
+	implementation 'org.springframework.boot:spring-boot-starter-data-rest'
+	implementation 'org.springframework.boot:spring-boot-starter-hateoas'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	runtimeOnly 'com.h2database:h2'
+	runtimeOnly 'org.postgresql:postgresql'
+	
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+}
+
+test {
+	useJUnitPlatform()
+}
+
+tasks.named("jar") {
+    enabled = false
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+task cloneJvmProfile {
+    ext.profile = System.getProperty("spring.profiles.active")
+    if (profile != null) {
+        println "Setting $profile profile in bootRun"
+        bootRun.systemProperties.put("spring.profiles.active", profile)
+    }
+}
