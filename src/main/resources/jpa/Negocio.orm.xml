@@ -5,7 +5,7 @@
 			     				     http://java.sun.com/xml/ns/persistence/orm_1_0.xsd"
 			     version="1.0">
 <!-- NO SÉ QUÉ SE PONE AQUÍ -->
-    <mapped-superclass class="es.proyecto.animuslucrandi.entidades." access="FIELD">
+    <mapped-superclass class="es.proyecto.animuslucrandi.entidades.NegocioConId" access="FIELD">
         <attributes>
             <basic name="nombre" optional="false" />
             <basic name="nif" optional="false" />

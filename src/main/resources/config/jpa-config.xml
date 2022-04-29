@@ -7,14 +7,14 @@
                            http://www.springframework.org/schema/data/jpa
                            http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
-	<jpa:repositories base-package="${es.proyecto.jpa-package}" />
+	<jpa:repositories base-package="${repositoriosAnimus}" />
 
 	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<!-- Decimos donde buscar entidades -->
 		<property name="packagesToScan"
-			value="${es.proyecto.entities-package}" />
+			value="${entidadesAnimus}" />
 		<property name="jpaVendorAdapter">
 			<!-- Implementacion de JPA que vamos a usar -->
 			<bean
@@ -22,7 +22,7 @@
 		</property>
 		<property name="jpaProperties">
 			<props>
-				<prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
 				<!-- <prop key="hibernate.show_sql">true</prop> -->
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
 				<prop key="hibernate.enable_lazy_load_no_trans">true</prop>
@@ -30,9 +30,6 @@
 		</property>
 		<property name="mappingResources">
             <list>
-				<value>jpa/AsociacionConId.orm.xml</value>
-				<value>jpa/FarmaciaConId.orm.xml</value>
-				<value>jpa/OpticaConId.orm.xml</value>
 				<value>jpa/Negocio.orm.xml</value>
             </list>
         </property>

@@ -1,28 +1,27 @@
 package es.proyecto.animuslucrandi.entidades;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 
-import libreria.animus.Farmacia;
+import libreria.animus.FarmaciaIntLib;
 
 @Entity
-public class FarmaciaConId extends Farmacia {
-  
-  @Id
-  @GeneratedValue
-  private long id;
+public class FarmaciaConId extends NegocioConId implements FarmaciaIntLib {
 
-  public long getId() {
-    return id;
-  }
+	private int numeroPuntosSigre;
+
+	@Override
+	public int getNumeroPuntosSigre() {
+		return numeroPuntosSigre;
+	}
+
+	@Override
+	public void setNumeroPuntosSigre(int numeroPuntosSigre) {
+		this.numeroPuntosSigre = numeroPuntosSigre;
+	}
   
-  public void setId(long id) {
-    this.id = id;
-  }
-  
-  public FarmaciaConId(String nombre, String nif, int numeroPuntosSigre) {
-    super(nombre, nif, numeroPuntosSigre);
-  }
+	public FarmaciaConId(String nombre, String nif, int numeroPuntosSigre) {
+		super(nombre, nif);
+		this.numeroPuntosSigre = numeroPuntosSigre;
+	}
 
 }
