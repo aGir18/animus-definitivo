@@ -31,10 +31,13 @@
 		<property name="mappingResources">
             <list>
 				<value>jpa/Asociacion.orm.xml</value>
+				<value>jpa/AsociacionConId.orm.xml</value>
 				<value>jpa/Farmacia.orm.xml</value>
+				<value>jpa/FarmaciaConId.orm.xml</value>				
 				<value>jpa/Negocio.orm.xml</value>
 				<value>jpa/NegocioConId.orm.xml</value>
 				<value>jpa/Optica.orm.xml</value>
+				<value>jpa/OpticaConId.orm.xml</value>
             </list>
         </property>
 	</bean>
