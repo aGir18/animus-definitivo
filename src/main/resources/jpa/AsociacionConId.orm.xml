@@ -6,6 +6,7 @@
 			     version="1.0">
 			     
     <entity class="es.proyecto.animuslucrandi.entidades.AsociacionConId" access="FIELD">
+        <table name="ASOCIACIONES"/>
         <attributes>
         </attributes>
     </entity>
