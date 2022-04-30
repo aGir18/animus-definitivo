@@ -2,25 +2,14 @@ package es.proyecto.animuslucrandi.entidades;
 
 import javax.persistence.Entity;
 
-import libreria.animus.OpticaIntLib;
+import libreria.animus.Optica;
 
 @Entity
-public class OpticaConId extends NegocioConId implements OpticaIntLib {
-  
-  private int numeroAutorefractometros;
-
-	@Override
-	public int getNumeroAutorefractometros() {
-		return numeroAutorefractometros;
-	}
-
-	@Override
-	public void setNumeroAutorefractometros(int numeroAutorefractometros) {
-		this.numeroAutorefractometros = numeroAutorefractometros;
+//@Table(name = "OPTICAS")
+public class OpticaConId extends Optica {
+ 
+	public OpticaConId(String nombre, String nif, int numeroAutorefractometros) {
+	  super(nombre, nif, numeroAutorefractometros);
 	}
 	
-	public OpticaConId(String nombre, String nif, int numeroAutorefractometros) {
-		super(nombre, nif);
-		this.numeroAutorefractometros = numeroAutorefractometros;
-	}
 }

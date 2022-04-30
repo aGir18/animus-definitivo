@@ -20,7 +20,7 @@ repositories {
 }
 
 dependencies {
-	implementation 'com.github.aGir18:animus-lucrandi-libreria-externa:edc9388bf4'
+	implementation 'com.github.aGir18:animus-lucrandi-libreria-externa:9840bda502'
 	
 	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'

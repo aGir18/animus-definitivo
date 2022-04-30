@@ -7,9 +7,6 @@
 			     
     <mapped-superclass class="es.proyecto.animuslucrandi.entidades.NegocioConId" access="FIELD">
         <attributes>
-        	<id name="id">
-                <generated-value strategy="IDENTITY"/>
-            </id>
         </attributes>
     </mapped-superclass>
 </entity-mappings>

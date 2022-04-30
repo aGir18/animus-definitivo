@@ -2,26 +2,13 @@ package es.proyecto.animuslucrandi.entidades;
 
 import javax.persistence.Entity;
 
-import libreria.animus.FarmaciaIntLib;
+import libreria.animus.Farmacia;
 
 @Entity
-public class FarmaciaConId extends NegocioConId implements FarmaciaIntLib {
+public class FarmaciaConId extends Farmacia {
 
-	private int numeroPuntosSigre;
-	
-	@Override
-	public int getNumeroPuntosSigre() {
-		return numeroPuntosSigre;
-	}
-
-	@Override
-	public void setNumeroPuntosSigre(int numeroPuntosSigre) {
-		this.numeroPuntosSigre = numeroPuntosSigre;
-	}
-  
 	public FarmaciaConId(String nombre, String nif, int numeroPuntosSigre) {
-		super(nombre, nif);
-		this.numeroPuntosSigre = numeroPuntosSigre;
+	  super(nombre, nif, numeroPuntosSigre);
 	}
 
 }
