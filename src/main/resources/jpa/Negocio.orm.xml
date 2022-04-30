@@ -5,11 +5,14 @@
 			     				     http://java.sun.com/xml/ns/persistence/orm_1_0.xsd"
 			     version="1.0">
 			     
-    <mapped-superclass class="es.proyecto.animuslucrandi.entidades.NegocioConId" access="FIELD">
+    <mapped-superclass class="libreria.animus.Negocio" access="FIELD">
         <attributes>
-        	<id name="id">
-                <generated-value strategy="IDENTITY"/>
-            </id>
+            <basic name="nombre" optional="false" >
+				<column name="NOMBRE" length="32 "/>
+            </basic>
+            <basic name="nif" optional="false" >
+            	<column name="NIF" length="32 "/>
+            </basic>
         </attributes>
     </mapped-superclass>
 </entity-mappings>

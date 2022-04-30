@@ -30,7 +30,7 @@
 		</property>
 		<property name="mappingResources">
             <list>
-				<value>jpa/Negocio.orm.xml</value>
+				<value>jpa/NegocioConId.orm.xml</value>
             </list>
         </property>
 	</bean>

@@ -8,7 +8,7 @@ import libreria.animus.FarmaciaIntLib;
 public class FarmaciaConId extends NegocioConId implements FarmaciaIntLib {
 
 	private int numeroPuntosSigre;
-
+	
 	@Override
 	public int getNumeroPuntosSigre() {
 		return numeroPuntosSigre;
