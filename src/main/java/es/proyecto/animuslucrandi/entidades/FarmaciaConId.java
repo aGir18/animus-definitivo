@@ -24,6 +24,8 @@ public class FarmaciaConId extends NegocioConId implements FarmaciaInterfaz {
     this.numeroPuntosSigre = numeroPuntosSigre;
   }
 
+  public FarmaciaConId() {};
+  
   public FarmaciaConId(String nombre, String nif) {
     super(nombre, nif);
   }

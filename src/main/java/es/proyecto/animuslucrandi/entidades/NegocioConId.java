@@ -24,6 +24,8 @@ public class NegocioConId extends Negocio {
   public void setAsociacion(AsociacionConId asociacion) {
     this.asociacion = asociacion;
   }
+  
+  public NegocioConId() {};
 
 	public NegocioConId(String nombre, String nif) {
 		super(nombre, nif);

@@ -28,6 +28,10 @@ public class AsociacionConId extends Asociacion {
     negocio.setAsociacion(this);
   }
   
+  public AsociacionConId() {
+    super(null);
+  }
+  
   public AsociacionConId(String nombre) {
     super(nombre);
   }

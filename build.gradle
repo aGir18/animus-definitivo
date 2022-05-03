@@ -21,18 +21,7 @@ repositories {
 
 dependencies {
 
-	//Con interfaz Optica también
-	implementation 'com.github.aGir18:animus-lucrandi-libreria-externa:14bebf6bec'
-	
-	//Con interfaz Farmacia
-	//implementation 'com.github.aGir18:animus-lucrandi-libreria-externa:61ed92f25b'
-	
-	//implementation 'com.github.aGir18:animus-lucrandi-libreria-externa:3e936706fe'
-
-	//implementation 'com.github.aGir18:animus-lucrandi-libreria-externa:c3e5b2f39d'
-
-	//implementation 'com.github.aGir18:animus-lucrandi-libreria-externa:d1c36b6000'
-	//implementation 'com.github.aGir18:animus-lucrandi-libreria-externa:9840bda502'
+	implementation 'com.github.aGir18:animus-lucrandi-libreria-externa:e878ec877c'
 	
 	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'

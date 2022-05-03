@@ -7,7 +7,9 @@
 			     
     <mapped-superclass class="libreria.animus.Negocio" access="FIELD">
         <attributes>
-        	<id name="id" />
+        	<id name="id" >
+        		<generated-value strategy="IDENTITY"/> 
+        	</id>
             <basic name="nombre" optional="false" >
 				<column name="NOMBRE" length="32 "/>
             </basic>

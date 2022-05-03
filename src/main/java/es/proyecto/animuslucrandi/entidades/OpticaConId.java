@@ -25,6 +25,8 @@ public class OpticaConId extends NegocioConId implements OpticaInterfaz {
     this.numeroAutorefractometros = numeroAutorefractometros;
   }
   
+  public OpticaConId() {};
+  
   public OpticaConId(String nombre, String nif) {
     super(nombre, nif);
   }
