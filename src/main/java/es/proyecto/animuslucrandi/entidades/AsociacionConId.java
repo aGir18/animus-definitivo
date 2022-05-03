@@ -1,13 +1,11 @@
 package es.proyecto.animuslucrandi.entidades;
 
 import java.util.Collection;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
 import libreria.animus.Asociacion;
-import libreria.animus.Negocio;
 
 @Entity
 public class AsociacionConId extends Asociacion {
@@ -25,7 +23,7 @@ public class AsociacionConId extends Asociacion {
   }
   
   // Establece la relacion en los dos sentidos
-  public void addSucesoConId(NegocioConId negocio) {
+  public void addNegocioConId(NegocioConId negocio) {
     getNegociosAsociacion().add(negocio);
     negocio.setAsociacion(this);
   }
