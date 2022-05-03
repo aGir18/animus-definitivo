@@ -5,8 +5,10 @@
 			     				     http://java.sun.com/xml/ns/persistence/orm_1_0.xsd"
 			     version="1.0">
 			     
-    <mapped-superclass class="es.proyecto.animuslucrandi.entidades.NegocioConId" access="FIELD">
+    <entity class="es.proyecto.animuslucrandi.entidades.NegocioConId" access="FIELD">
+    <!-- <mapped-superclass class="es.proyecto.animuslucrandi.entidades.NegocioConId" access="FIELD">  -->
         <attributes>
         </attributes>
-    </mapped-superclass>
+    <!--   </mapped-superclass> -->
+    </entity>
 </entity-mappings>

@@ -1,14 +1,31 @@
 package es.proyecto.animuslucrandi.entidades;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
-import libreria.animus.Farmacia;
+import libreria.animus.FarmaciaInterfaz;
 
 @Entity
-public class FarmaciaConId extends Farmacia {
+@Access(value=AccessType.FIELD)
+@DiscriminatorValue("FARMACIA")
+public class FarmaciaConId extends NegocioConId implements FarmaciaInterfaz {
 
-	public FarmaciaConId(String nombre, String nif, int numeroPuntosSigre) {
-	  super(nombre, nif, numeroPuntosSigre);
-	}
+  private int numeroPuntosSigre;
 
+  @Override
+  public int getNumeroPuntosSigre() {
+    return numeroPuntosSigre;
+  }
+
+  @Override
+  public void setNumeroPuntosSigre(int numeroPuntosSigre) {
+    this.numeroPuntosSigre = numeroPuntosSigre;
+  }
+
+  public FarmaciaConId(String nombre, String nif) {
+    super(nombre, nif);
+  }
+  
 }

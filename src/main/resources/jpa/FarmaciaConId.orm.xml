@@ -8,6 +8,9 @@
     <entity class="es.proyecto.animuslucrandi.entidades.FarmaciaConId" access="FIELD">
     	<table name="FARMACIAS"/>
         <attributes>
+        	<basic name="numeroPuntosSigre" optional="false" >
+				<column name="NUMERO_PUNTOS_SIGRE" length="32 "/>
+            </basic>
         </attributes>
     </entity>
 </entity-mappings>

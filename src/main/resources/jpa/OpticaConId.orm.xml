@@ -8,6 +8,9 @@
     <entity class="es.proyecto.animuslucrandi.entidades.OpticaConId" access="FIELD">
     	<table name="OPTICAS"/>
         <attributes>
+        	<basic name="numeroAutorefractometros" optional="false" >
+				<column name="NUMERO_AUTOREFRACTOMETROS" length="32 "/>
+            </basic>
         </attributes>
     </entity>
 </entity-mappings>
