@@ -6,9 +6,12 @@
 			     version="1.0">
 			     
     <entity class="es.proyecto.animuslucrandi.entidades.NegocioConId" access="FIELD">
-    	<table name="NEGOCIOS"/>    	
+    	<!--<table name="NEGOCIOS"/>-->    	
     <!-- <mapped-superclass class="es.proyecto.animuslucrandi.entidades.NegocioConId" access="FIELD">  -->
         <attributes>
+        	<many-to-one name="asociacion" optional="false" fetch="LAZY"><!-- fetch="LAZY">-->
+                <join-column name="ID_ASOCIACION"/>
+            </many-to-one>
         </attributes>
     <!--   </mapped-superclass> -->
     </entity>

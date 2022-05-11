@@ -8,6 +8,7 @@
     <entity class="es.proyecto.animuslucrandi.entidades.AsociacionConId" access="FIELD">
         <table name="ASOCIACIONES"/>
         <attributes>
+        	<one-to-many name="negociosAsociacion" target-entity="es.proyecto.animuslucrandi.entidades.NegocioConId" mapped-by="asociacion" />
         </attributes>
     </entity>
 </entity-mappings>

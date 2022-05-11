@@ -14,6 +14,5 @@
 				<column name="NOMBRE" length="32 "/>
             </basic>
         </attributes>
-        <!-- Me falta el segundo ATRIBUTO -->
     </mapped-superclass>
 </entity-mappings>
