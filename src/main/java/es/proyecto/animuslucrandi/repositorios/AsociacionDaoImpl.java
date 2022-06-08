@@ -9,6 +9,7 @@ import javax.persistence.PersistenceContext;
 import org.springframework.transaction.annotation.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 
 import es.proyecto.animuslucrandi.entidades.AsociacionConId;
 import es.proyecto.animuslucrandi.entidades.FarmaciaConId;
@@ -20,8 +21,15 @@ public class AsociacionDaoImpl implements AsociacionDaoCustom {
   @Autowired
   AsociacionConIdDAO asociacionDao;
   
+//  AÑADIDO POR PROBLEMAS
+  @Autowired
+  public AsociacionDaoImpl(@Lazy AsociacionConIdDAO asociacionConIdDAO) {
+    this.asociacionDao = asociacionConIdDAO;
+  }
+  
   @PersistenceContext
   EntityManager entityManager;
+  
   
   @Override
   public Set<AsociacionConId> getAsociacionesConNegocios(boolean poseeFarmacia, boolean poseeOptica) {
