@@ -1,7 +1,7 @@
 package es.proyecto.animuslucrandi.entidades;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -12,16 +12,16 @@ import libreria.animus.Asociacion;
 @Entity
 public class AsociacionConId extends Asociacion {
 
-  private Collection<NegocioConId> negociosAsociacion = new ArrayList<>();
+  private List<NegocioConId> negociosAsociacion = new ArrayList<>();
   
   @OneToMany(cascade = CascadeType.ALL, targetEntity=NegocioConId.class, mappedBy = "asociacion")
-  public Collection<NegocioConId> getNegociosAsociacion() {
+  public List<NegocioConId> getNegociosAsociacion() {
     return negociosAsociacion;
   }
   
-  public void setNegociosAsociacion(Collection<NegocioConId> negociosAsociacion) {
+  public void setNegociosAsociacion(List<NegocioConId> negociosAsociacion) {
     this.negociosAsociacion = negociosAsociacion;
-  }
+  }  
   
   // Establece la relacion en los dos sentidos
   public void addNegocioConId(NegocioConId negocio) {

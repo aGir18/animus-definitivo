@@ -5,7 +5,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.net.URI;
-import java.net.URISyntaxException;
+import java.net.URLDecoder;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -20,7 +20,6 @@ import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.RepositorySearchesResource;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.RepresentationModelProcessor;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.cors.CorsConfiguration;
@@ -44,57 +43,8 @@ public class ConfiguracionPorJava {
     ObjectMapper mapper = new ObjectMapper();
 
     return mapper;
-  }
-  
-  @Bean
-  RepresentationModelProcessor<RepositorySearchesResource> addSearchLinks(RepositoryRestConfiguration config) {
-    Map<Class<?>, Class<?>> controllersRegistrados = new HashMap<>();
-
-    controllersRegistrados.put(AsociacionConId.class, AsociacionController.class);
-
-
-    return new RepresentationModelProcessor<RepositorySearchesResource>() {
-
-      @SuppressWarnings("deprecation")
-      @Override
-      public RepositorySearchesResource process(RepositorySearchesResource searchResource) {
-        if (controllersRegistrados.containsKey(searchResource.getDomainType())) {
-          Method[] metodos = controllersRegistrados.get(searchResource.getDomainType()).getDeclaredMethods();
-          for (Method m : metodos) {
-            if (!m.isAnnotationPresent(ResponseBody.class))
-              continue;
-            try {
-              Object[] pathVars = Stream.of(m.getParameters())
-                  .filter(p -> p.isAnnotationPresent(PathVariable.class))
-                  .map(p -> "(" + p.getName() + ")").collect(Collectors.toList()).toArray();
-              URI uri = linkTo(m, pathVars).toUri();
-              String path = new URI(uri.getScheme(), uri.getUserInfo(), uri.getHost(), uri.getPort(),
-                  config.getBasePath() + uri.getPath(), uri.getQuery(), uri.getFragment()).toString()
-                      .replace("(", "{").replace(")", "}");
-              String requestParams = Stream.of(m.getParameters())
-                  .filter(p -> p.isAnnotationPresent(RequestParam.class)).map(Parameter::getName)
-                  .collect(Collectors.joining(","));
-              //searchResource.add(new Link(path + "{?" + requestParams + "}", m.getName()));
-              searchResource.add(Link(path + "{?" + requestParams + "}", m.getName()));
-            } catch (URISyntaxException e) {
-              e.printStackTrace();
-            }
-          }
-        }
-
-        return searchResource;
-      }
-
-      //Me genera esto para quitar el fallo de la línea 78
-      private Link Link(String string, String name) {
-        // TODO Auto-generated method stub
-        return null;
-      }
-
-    };
-
-  }
-  
+  }      
+ 
   @Bean
   CorsFilter corsFilter() {
     final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -108,5 +58,44 @@ public class ConfiguracionPorJava {
 
     return new CorsFilter(source);
   }
+  
+  @Bean
+  RepresentationModelProcessor<RepositorySearchesResource> addSearchLinks(RepositoryRestConfiguration config) {
+      Map<Class<?>, Class<?>> controllersRegistrados = new HashMap<>();
+      
+      controllersRegistrados.put(AsociacionConId.class, AsociacionController.class);
+
+      return new RepresentationModelProcessor<RepositorySearchesResource>() {
+
+          @Override
+          public RepositorySearchesResource process(RepositorySearchesResource searchResource) {
+              if (controllersRegistrados.containsKey(searchResource.getDomainType())) {
+                  Method[] metodos = controllersRegistrados.get(searchResource.getDomainType()).getDeclaredMethods();
+                  for (Method m : metodos) {
+                      if (!m.isAnnotationPresent(ResponseBody.class)) {
+                          continue;
+                      }
+                      try {
+                          URI uri = linkTo(m).toUri();
+                          String path = new URI(uri.getScheme(), uri.getUserInfo(), uri.getHost(), uri.getPort(),
+                                  config.getBasePath() + uri.getPath(), null, null).toString();
+                          path = URLDecoder.decode(path, "UTF-8");
+                          String requestParams = Stream.of(m.getParameters())
+                                  .filter(p -> p.isAnnotationPresent(RequestParam.class))
+                                  .map(Parameter::getName)
+                                  .collect(Collectors.joining(","));
+                          searchResource.add(Link.of(path + "{?" + requestParams + "}", m.getName()));
+                      } catch (Exception e) {
+                          e.printStackTrace();
+                      }
+                  }
+              }
+
+              return searchResource;
+          }
+
+      };
+  }
+
   
 }

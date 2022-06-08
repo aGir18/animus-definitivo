@@ -1,6 +1,8 @@
 package es.proyecto.animuslucrandi.repositorios;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -9,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import es.proyecto.animuslucrandi.entidades.AsociacionConId;
+import es.proyecto.animuslucrandi.entidades.FarmaciaConId;
+import es.proyecto.animuslucrandi.entidades.NegocioConId;
 
 @Transactional(readOnly = true)
 public class AsociacionDaoImpl implements AsociacionDaoCustom {
@@ -20,12 +24,68 @@ public class AsociacionDaoImpl implements AsociacionDaoCustom {
   EntityManager entityManager;
   
   @Override
-  public List<AsociacionConId> getAsociacionesConNegocios(boolean poseeFarmacia, boolean poseeOptica) {
+  public Set<AsociacionConId> getAsociacionesConNegocios(boolean poseeFarmacia, boolean poseeOptica) {
+    int contadorFarmacia = 0;
+    int contadorOptica = 0;
+    
     List<AsociacionConId> asociaciones = asociacionDao.findAll();
-    System.out.println("La longitud es " + asociaciones);
+    Set<AsociacionConId> asociacionesFiltradas = new HashSet<AsociacionConId>();
     
     
-    return asociaciones;
+    for (AsociacionConId asociacionConId : asociaciones) {
+      for (NegocioConId negocio : asociacionConId.getNegociosAsociacion()) {
+        
+        if (poseeFarmacia == true && poseeOptica == true) {
+          if (negocio.getClass() == FarmaciaConId.class) {
+            contadorFarmacia = contadorFarmacia++;
+            }
+          if (negocio.getClass() == NegocioConId.class) {
+            contadorOptica = contadorOptica++;
+            }
+          if (contadorFarmacia > 0 && contadorOptica > 0) {
+            asociacionesFiltradas.add(asociacionConId);
+            }
+          } 
+        
+        else if (poseeFarmacia == false && poseeOptica == true) {
+          if (negocio.getClass() == FarmaciaConId.class) {
+            contadorFarmacia = contadorFarmacia++;
+            }
+          if (negocio.getClass() == NegocioConId.class) {
+            contadorOptica = contadorOptica++;
+            }
+          if (contadorFarmacia == 0 && contadorOptica > 0) {
+            asociacionesFiltradas.add(asociacionConId);
+            }
+          } 
+        
+        else if (poseeFarmacia == true && poseeOptica == false) {
+          if (negocio.getClass() == FarmaciaConId.class) {
+            contadorFarmacia = contadorFarmacia++;
+            }
+          if (negocio.getClass() == NegocioConId.class) {
+            contadorOptica = contadorOptica++;
+            }
+          if (contadorFarmacia > 0 && contadorOptica == 0) {
+            asociacionesFiltradas.add(asociacionConId);
+            }
+          }
+        
+        else if (poseeFarmacia == false && poseeOptica == false) {
+          if (negocio.getClass() == FarmaciaConId.class) {
+            contadorFarmacia = contadorFarmacia++;
+            }
+          if (negocio.getClass() == NegocioConId.class) {
+            contadorOptica = contadorOptica++;
+            }
+          
+          if (contadorFarmacia == 0 && contadorOptica == 0) {
+            asociacionesFiltradas.add(asociacionConId);
+            }
+          }
+        }
+      }    
+    return asociacionesFiltradas;
   }
 //    public List<Producto> getProductosDelClienteActivos(Long id) {
 //      List<Producto> productos = clienteDAO.findById(id).get().getProductos().stream()
