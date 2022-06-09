@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Lazy;
 import es.proyecto.animuslucrandi.entidades.AsociacionConId;
 import es.proyecto.animuslucrandi.entidades.FarmaciaConId;
 import es.proyecto.animuslucrandi.entidades.NegocioConId;
+import es.proyecto.animuslucrandi.entidades.OpticaConId;
 
 @Transactional(readOnly = true)
 public class AsociacionDaoImpl implements AsociacionDaoCustom {
@@ -21,7 +22,7 @@ public class AsociacionDaoImpl implements AsociacionDaoCustom {
   @Autowired
   AsociacionConIdDAO asociacionDao;
   
-//  AÑADIDO POR PROBLEMAS
+//  Aï¿½ADIDO POR PROBLEMAS
   @Autowired
   public AsociacionDaoImpl(@Lazy AsociacionConIdDAO asociacionConIdDAO) {
     this.asociacionDao = asociacionConIdDAO;
@@ -47,7 +48,7 @@ public class AsociacionDaoImpl implements AsociacionDaoCustom {
           if (negocio.getClass() == FarmaciaConId.class) {
             contadorFarmacia = contadorFarmacia++;
             }
-          if (negocio.getClass() == NegocioConId.class) {
+          if (negocio.getClass() == OpticaConId.class) {
             contadorOptica = contadorOptica++;
             }
           if (contadorFarmacia > 0 && contadorOptica > 0) {
@@ -59,7 +60,7 @@ public class AsociacionDaoImpl implements AsociacionDaoCustom {
           if (negocio.getClass() == FarmaciaConId.class) {
             contadorFarmacia = contadorFarmacia++;
             }
-          if (negocio.getClass() == NegocioConId.class) {
+          if (negocio.getClass() == OpticaConId.class) {
             contadorOptica = contadorOptica++;
             }
           if (contadorFarmacia == 0 && contadorOptica > 0) {
@@ -71,7 +72,7 @@ public class AsociacionDaoImpl implements AsociacionDaoCustom {
           if (negocio.getClass() == FarmaciaConId.class) {
             contadorFarmacia = contadorFarmacia++;
             }
-          if (negocio.getClass() == NegocioConId.class) {
+          if (negocio.getClass() == OpticaConId.class) {
             contadorOptica = contadorOptica++;
             }
           if (contadorFarmacia > 0 && contadorOptica == 0) {
@@ -83,7 +84,7 @@ public class AsociacionDaoImpl implements AsociacionDaoCustom {
           if (negocio.getClass() == FarmaciaConId.class) {
             contadorFarmacia = contadorFarmacia++;
             }
-          if (negocio.getClass() == NegocioConId.class) {
+          if (negocio.getClass() == OpticaConId.class) {
             contadorOptica = contadorOptica++;
             }
           
