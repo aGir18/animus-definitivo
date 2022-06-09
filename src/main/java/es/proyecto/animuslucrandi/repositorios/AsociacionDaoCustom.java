@@ -1,11 +1,11 @@
 package es.proyecto.animuslucrandi.repositorios;
 
-import java.util.Set;
+import java.util.List;
 
 import es.proyecto.animuslucrandi.entidades.AsociacionConId;
 
 public interface AsociacionDaoCustom {
 
-  Set<AsociacionConId> getAsociacionesConNegocios(boolean poseeFarmacia, boolean poseeOptica);
+  List<AsociacionConId> getAsociacionesConNegocios(boolean poseeFarmacia, boolean poseeOptica);
   
 }

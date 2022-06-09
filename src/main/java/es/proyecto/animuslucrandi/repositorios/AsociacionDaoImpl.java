@@ -1,8 +1,7 @@
 package es.proyecto.animuslucrandi.repositorios;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -21,7 +20,7 @@ public class AsociacionDaoImpl implements AsociacionDaoCustom {
   @Autowired
   AsociacionConIdDAO asociacionDao;
   
-//  AÑADIDO POR PROBLEMAS
+//  ANNADIDO POR PROBLEMAS
   @Autowired
   public AsociacionDaoImpl(@Lazy AsociacionConIdDAO asociacionConIdDAO) {
     this.asociacionDao = asociacionConIdDAO;
@@ -32,12 +31,13 @@ public class AsociacionDaoImpl implements AsociacionDaoCustom {
   
   
   @Override
-  public Set<AsociacionConId> getAsociacionesConNegocios(boolean poseeFarmacia, boolean poseeOptica) {
+  public List<AsociacionConId> getAsociacionesConNegocios(boolean poseeFarmacia, boolean poseeOptica) {
     int contadorFarmacia = 0;
     int contadorOptica = 0;
     
     List<AsociacionConId> asociaciones = asociacionDao.findAll();
-    Set<AsociacionConId> asociacionesFiltradas = new HashSet<AsociacionConId>();
+//    Set<AsociacionConId> asociacionesFiltradas = new HashSet<AsociacionConId>();
+    List<AsociacionConId> asociacionesFiltradas = new ArrayList<AsociacionConId>();
     
     
     for (AsociacionConId asociacionConId : asociaciones) {

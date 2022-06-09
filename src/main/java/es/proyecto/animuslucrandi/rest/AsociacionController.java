@@ -1,7 +1,7 @@
 package es.proyecto.animuslucrandi.rest;
 
 
-import java.util.Set;
+import java.util.List;
 
 import org.springframework.data.rest.webmvc.PersistentEntityResource;
 import org.springframework.data.rest.webmvc.PersistentEntityResourceAssembler;
@@ -31,7 +31,7 @@ public class AsociacionController {
       @RequestParam("poseeOptica") boolean poseeOptica,
       PersistentEntityResourceAssembler assembler) {
     
-    Set<AsociacionConId> asociaciones = asociacionDao.getAsociacionesConNegocios(poseeFarmacia, poseeOptica);
+    List<AsociacionConId> asociaciones = asociacionDao.getAsociacionesConNegocios(poseeFarmacia, poseeOptica);
     
     return assembler.toCollectionModel(asociaciones);
   }  

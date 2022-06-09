@@ -13,8 +13,8 @@ import es.proyecto.animuslucrandi.entidades.NegocioConId;
 @RepositoryRestResource(path = "negocios", itemResourceRel = "negocio", collectionResourceRel = "negocios")
 public interface NegocioConIdDAO extends JpaRepository<NegocioConId, Long>{
 
+//  @Query("SELECT p FROM NegocioConId p WHERE UPPER(p.nombre) LIKE UPPER(concat('%', :txt, '%'))")
   @RestResource(path="por-nombre")
-  @Query("SELECT p FROM NegocioConId p WHERE UPPER(p.nombre) LIKE UPPER(concat('%', :txt, '%'))")
   List<NegocioConId> findByNombreIgnoreCase(String txt);
     
   //Si yo NO quisiera borrarlo: 
