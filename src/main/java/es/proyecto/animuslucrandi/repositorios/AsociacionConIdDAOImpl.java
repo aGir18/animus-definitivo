@@ -1,7 +1,9 @@
 package es.proyecto.animuslucrandi.repositorios;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -20,6 +22,8 @@ public class AsociacionConIdDAOImpl implements AsociacionConIdDAOCustom {
 
   @Autowired
   AsociacionConIdDAO asociacionDao;
+  FarmaciaConIdDAO farmaciaDao;
+  OpticaConIdDAO opticaDao;
   
 
 //  ANNADIDO POR PROBLEMAS
@@ -34,19 +38,31 @@ public class AsociacionConIdDAOImpl implements AsociacionConIdDAOCustom {
   
   
   @Override
-  public List<AsociacionConId> getAsociacionesConNegocios(boolean poseeFarmacia, boolean poseeOptica) {
+  public Set<AsociacionConId> getAsociacionesConNegocios(boolean poseeFarmacia, boolean poseeOptica) {
     int contadorFarmacia = 0;
     int contadorOptica = 0;
     
     List<AsociacionConId> asociaciones = asociacionDao.findAll();
-//    Set<AsociacionConId> asociacionesFiltradas = new HashSet<AsociacionConId>();
-    List<AsociacionConId> asociacionesFiltradas = new ArrayList<AsociacionConId>();
-    
+    Set<AsociacionConId> asociacionesFiltradas = new HashSet<AsociacionConId>();
+//    List<FarmaciaConId> farmacias = farmaciaDao.findAll();
+//    List<OpticaConId> opticas = opticaDao.findAll();
+//    
+//    if (poseeFarmacia) {      
+//      for (FarmaciaConId farmacia : farmacias) {
+//        asociacionesFiltradas.add(farmacia.getAsociacion());
+//      }
+//    }
+//    
+//    if (poseeOptica) {
+//      for (OpticaConId optica : opticas) {
+//        asociacionesFiltradas.add(optica.getAsociacion());
+//      }
+//    }   
     
     for (AsociacionConId asociacionConId : asociaciones) {
       for (NegocioConId negocio : asociacionConId.getNegociosAsociacion()) {
         
-        if (poseeFarmacia == true && poseeOptica == true) {
+        if (poseeFarmacia && poseeOptica) {
           if (negocio.getClass() == FarmaciaConId.class) {
             contadorFarmacia = contadorFarmacia++;
             }
@@ -58,7 +74,7 @@ public class AsociacionConIdDAOImpl implements AsociacionConIdDAOCustom {
             }
           } 
         
-        else if (poseeFarmacia == false && poseeOptica == true) {
+        else if (!poseeFarmacia && poseeOptica) {
           if (negocio.getClass() == FarmaciaConId.class) {
             contadorFarmacia = contadorFarmacia++;
             }
@@ -70,7 +86,7 @@ public class AsociacionConIdDAOImpl implements AsociacionConIdDAOCustom {
             }
           } 
         
-        else if (poseeFarmacia == true && poseeOptica == false) {
+        else if (poseeFarmacia == true && !poseeOptica) {
           if (negocio.getClass() == FarmaciaConId.class) {
             contadorFarmacia = contadorFarmacia++;
             }
@@ -82,7 +98,7 @@ public class AsociacionConIdDAOImpl implements AsociacionConIdDAOCustom {
             }
           }
         
-        else if (poseeFarmacia == false && poseeOptica == false) {
+        else if (!poseeFarmacia && !poseeOptica) {
           if (negocio.getClass() == FarmaciaConId.class) {
             contadorFarmacia = contadorFarmacia++;
             }
@@ -95,97 +111,9 @@ public class AsociacionConIdDAOImpl implements AsociacionConIdDAOCustom {
             }
           }
         }
-      }    
+  }
+          
     return asociacionesFiltradas;
   }
-//    public List<Producto> getProductosDelClienteActivos(Long id) {
-//      List<Producto> productos = clienteDAO.findById(id).get().getProductos().stream()
-//          .filter(j -> j.getActivo() == true).collect(Collectors.toList());
-//
-//      return productos;
-//    }
-    
-    /*
-     * @Override
-  public List<CazaConId> getCazasPorFecha(Instant fecha) {
-    List<CazaConId> cazas = cazaDAO.findAll().stream().filter(c -> c.getFechaEvento().equals(fecha)).collect(Collectors.toList());
-    return cazas;
-  }
-
-  @Override
-  public List<CazaConId> getCazasPorFechaPosterior(Instant fecha) {
-    List<CazaConId> cazas = cazaDAO.findAll().stream().filter(c -> c.getFechaEvento().isAfter(fecha)).collect(Collectors.toList());
-    return cazas;
-  }
-
-@Override
-  public List<AusenciaConID> getAusenciasPersona(long id) {
-    List<AusenciaConID> listadoAusenciasAusenciaConIDs = new ArrayList<AusenciaConID>();
-    System.err.println("persona" + persona.findById(id).get().getId());
-    ausencia.findAll().forEach(a -> {
-      System.out.println("ausencia" + a);
-      System.err.println("idausencia" + a.getPersona().getId());
-      
-      if (a.getPersona() != null && a.getPersona().equals(persona.findById(id).get())) {
-        listadoAusenciasAusenciaConIDs.add(a);
-      }
-    });
-    return listadoAusenciasAusenciaConIDs;
-  }
-
-
-   @Override
-    public List<MovimientoConId> getMovimientosPorCategorias(String categoria, Long usuarioId) {
-        Query query = entityManager.createNativeQuery(
-                "SELECT c.* FROM cuentas as c " +
-                        "WHERE c.id_usuario= ?1", CuentaConId.class);
-        query.setParameter(1, usuarioId);
-        List<CuentaConId> cuentas = query.getResultList();
-
-        List<MovimientoConId> movimientos = new ArrayList<>();
-        for (CuentaConId cuenta:cuentas) {
-            for (Movimiento movimiento : cuenta.getMovimientos()) {
-                MovimientoConId movimientoConId = (MovimientoConId) movimiento ;
-                if(movimiento.getCategoria().getNombreCategoria().equals(categoria)){
-                    movimientos.add(movimientoConId);
-                }
-            }
-        }
-
-        return movimientos;
-    }
-
-@Override
-  public SesionConId addCliente(Long idCliente, Long idHorario) {
-    ClienteConId cliente = clienteDAO.findById(idCliente).get();
-    SesionConId sesionConId = sesionDAO.findById(idHorario).get();
-    if (sesionConId.getEntrenamiento() instanceof EntrenamientoConSala) {
-      EntrenamientoConSala entrenamientoConSala = (EntrenamientoConSala) sesionConId.getEntrenamiento();
-      SalaConId salaConId = entrenamientoConSala.getSala();
-      int clientesApuntados = sesionConId.getClientes().size();
-      int numEquipamiento = salaConId.getEquipamientos().size();
-      if (numEquipamiento <= clientesApuntados) {
-        
-        return null;
-      
-      }
-      
-    }
-    
-    if (!sesionConId.getClientes().contains(cliente)) {
-      sesionConId.addCliente(cliente);
-      return sesionConId;
-      
-    }
-    return null;
-    
-  }
-
-
-     * 
-     * */
-    
-    
-
-
+  
 }
