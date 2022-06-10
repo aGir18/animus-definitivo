@@ -4,7 +4,7 @@ import java.util.List;
 
 import es.proyecto.animuslucrandi.entidades.AsociacionConId;
 
-public interface AsociacionDaoCustom {
+public interface AsociacionConIdDAOCustom {
 
   List<AsociacionConId> getAsociacionesConNegocios(boolean poseeFarmacia, boolean poseeOptica);
   

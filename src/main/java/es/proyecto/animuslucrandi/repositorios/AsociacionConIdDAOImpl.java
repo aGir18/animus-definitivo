@@ -16,7 +16,7 @@ import es.proyecto.animuslucrandi.entidades.NegocioConId;
 import es.proyecto.animuslucrandi.entidades.OpticaConId;
 
 @Transactional(readOnly = true)
-public class AsociacionDaoImpl implements AsociacionDaoCustom {
+public class AsociacionConIdDAOImpl implements AsociacionConIdDAOCustom {
 
   @Autowired
   AsociacionConIdDAO asociacionDao;
@@ -25,7 +25,7 @@ public class AsociacionDaoImpl implements AsociacionDaoCustom {
 //  ANNADIDO POR PROBLEMAS
 
   @Autowired
-  public AsociacionDaoImpl(@Lazy AsociacionConIdDAO asociacionConIdDAO) {
+  public AsociacionConIdDAOImpl(@Lazy AsociacionConIdDAO asociacionConIdDAO) {
     this.asociacionDao = asociacionConIdDAO;
   }
   
