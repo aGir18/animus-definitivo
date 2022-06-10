@@ -1,6 +1,5 @@
 package es.proyecto.animuslucrandi.repositorios;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -14,7 +13,6 @@ import org.springframework.context.annotation.Lazy;
 
 import es.proyecto.animuslucrandi.entidades.AsociacionConId;
 import es.proyecto.animuslucrandi.entidades.FarmaciaConId;
-import es.proyecto.animuslucrandi.entidades.NegocioConId;
 import es.proyecto.animuslucrandi.entidades.OpticaConId;
 
 @Transactional(readOnly = true)
@@ -24,13 +22,12 @@ public class AsociacionConIdDAOImpl implements AsociacionConIdDAOCustom {
   AsociacionConIdDAO asociacionDao;
   FarmaciaConIdDAO farmaciaDao;
   OpticaConIdDAO opticaDao;
-  
-
-//  ANNADIDO POR PROBLEMAS
 
   @Autowired
-  public AsociacionConIdDAOImpl(@Lazy AsociacionConIdDAO asociacionConIdDAO) {
+  public AsociacionConIdDAOImpl(@Lazy AsociacionConIdDAO asociacionConIdDAO, FarmaciaConIdDAO farmaciaConIdDAO, OpticaConIdDAO opticaConIdDAO) {
     this.asociacionDao = asociacionConIdDAO;
+    this.farmaciaDao = farmaciaConIdDAO;
+    this.opticaDao = opticaConIdDAO;
   }
   
   @PersistenceContext
@@ -39,80 +36,40 @@ public class AsociacionConIdDAOImpl implements AsociacionConIdDAOCustom {
   
   @Override
   public Set<AsociacionConId> getAsociacionesConNegocios(boolean poseeFarmacia, boolean poseeOptica) {
-    int contadorFarmacia = 0;
-    int contadorOptica = 0;
-    
-    List<AsociacionConId> asociaciones = asociacionDao.findAll();
+
     Set<AsociacionConId> asociacionesFiltradas = new HashSet<AsociacionConId>();
-//    List<FarmaciaConId> farmacias = farmaciaDao.findAll();
-//    List<OpticaConId> opticas = opticaDao.findAll();
-//    
-//    if (poseeFarmacia) {      
-//      for (FarmaciaConId farmacia : farmacias) {
-//        asociacionesFiltradas.add(farmacia.getAsociacion());
-//      }
-//    }
-//    
-//    if (poseeOptica) {
-//      for (OpticaConId optica : opticas) {
-//        asociacionesFiltradas.add(optica.getAsociacion());
-//      }
-//    }   
+    List<FarmaciaConId> farmacias = farmaciaDao.findAll();
+    List<OpticaConId> opticas = opticaDao.findAll();
     
-    for (AsociacionConId asociacionConId : asociaciones) {
-      for (NegocioConId negocio : asociacionConId.getNegociosAsociacion()) {
-        
-        if (poseeFarmacia && poseeOptica) {
-          if (negocio.getClass() == FarmaciaConId.class) {
-            contadorFarmacia = contadorFarmacia++;
-            }
-          if (negocio.getClass() == OpticaConId.class) {
-            contadorOptica = contadorOptica++;
-            }
-          if (contadorFarmacia > 0 && contadorOptica > 0) {
-            asociacionesFiltradas.add(asociacionConId);
-            }
-          } 
-        
-        else if (!poseeFarmacia && poseeOptica) {
-          if (negocio.getClass() == FarmaciaConId.class) {
-            contadorFarmacia = contadorFarmacia++;
-            }
-          if (negocio.getClass() == OpticaConId.class) {
-            contadorOptica = contadorOptica++;
-            }
-          if (contadorFarmacia == 0 && contadorOptica > 0) {
-            asociacionesFiltradas.add(asociacionConId);
-            }
-          } 
-        
-        else if (poseeFarmacia == true && !poseeOptica) {
-          if (negocio.getClass() == FarmaciaConId.class) {
-            contadorFarmacia = contadorFarmacia++;
-            }
-          if (negocio.getClass() == OpticaConId.class) {
-            contadorOptica = contadorOptica++;
-            }
-          if (contadorFarmacia > 0 && contadorOptica == 0) {
-            asociacionesFiltradas.add(asociacionConId);
-            }
-          }
-        
-        else if (!poseeFarmacia && !poseeOptica) {
-          if (negocio.getClass() == FarmaciaConId.class) {
-            contadorFarmacia = contadorFarmacia++;
-            }
-          if (negocio.getClass() == OpticaConId.class) {
-            contadorOptica = contadorOptica++;
-            }
-          
-          if (contadorFarmacia == 0 && contadorOptica == 0) {
-            asociacionesFiltradas.add(asociacionConId);
-            }
-          }
-        }
-  }
-          
+    if (poseeFarmacia && poseeOptica) {      
+      for (FarmaciaConId farmacia : farmacias) {
+        asociacionesFiltradas.add(farmacia.getAsociacion());
+      }
+      for (OpticaConId optica : opticas) {
+        asociacionesFiltradas.add(optica.getAsociacion());
+      }
+    }
+    
+    if (!poseeFarmacia && poseeOptica) {   
+      for (OpticaConId optica : opticas) {
+        asociacionesFiltradas.add(optica.getAsociacion());
+      }
+      for (FarmaciaConId farmaciaEliminar : farmacias) {
+        asociacionesFiltradas.remove(farmaciaEliminar.getAsociacion());
+      }
+    }
+    
+    if (poseeFarmacia && !poseeOptica) {
+      for (FarmaciaConId farmacia : farmacias) {
+        asociacionesFiltradas.add(farmacia.getAsociacion());
+      }
+      for (OpticaConId opticaEliminar : opticas) {
+        asociacionesFiltradas.remove(opticaEliminar.getAsociacion());
+      }
+    }
+    
+    
+
     return asociacionesFiltradas;
   }
   
