@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Lazy;
 
 import es.proyecto.animuslucrandi.entidades.AsociacionConId;
 import es.proyecto.animuslucrandi.entidades.FarmaciaConId;
+import es.proyecto.animuslucrandi.entidades.NegocioConId;
 import es.proyecto.animuslucrandi.entidades.OpticaConId;
 
 @Transactional(readOnly = true)
@@ -22,12 +23,16 @@ public class AsociacionConIdDAOImpl implements AsociacionConIdDAOCustom {
   AsociacionConIdDAO asociacionDao;
   FarmaciaConIdDAO farmaciaDao;
   OpticaConIdDAO opticaDao;
+  NegocioConIdDAO negocioDao;
 
   @Autowired
-  public AsociacionConIdDAOImpl(@Lazy AsociacionConIdDAO asociacionConIdDAO, FarmaciaConIdDAO farmaciaConIdDAO, OpticaConIdDAO opticaConIdDAO) {
+  public AsociacionConIdDAOImpl(@Lazy AsociacionConIdDAO asociacionConIdDAO, 
+      FarmaciaConIdDAO farmaciaConIdDAO, OpticaConIdDAO opticaConIdDAO,
+      NegocioConIdDAO negocioConIdDAO) {
     this.asociacionDao = asociacionConIdDAO;
     this.farmaciaDao = farmaciaConIdDAO;
     this.opticaDao = opticaConIdDAO;
+    this.negocioDao = negocioConIdDAO;
   }
   
   @PersistenceContext
@@ -38,6 +43,7 @@ public class AsociacionConIdDAOImpl implements AsociacionConIdDAOCustom {
   public Set<AsociacionConId> getAsociacionesConNegocios(boolean poseeFarmacia, boolean poseeOptica) {
 
     Set<AsociacionConId> asociacionesFiltradas = new HashSet<AsociacionConId>();
+    List<NegocioConId> negocios = negocioDao.findAll();
     List<FarmaciaConId> farmacias = farmaciaDao.findAll();
     List<OpticaConId> opticas = opticaDao.findAll();
     
@@ -68,7 +74,17 @@ public class AsociacionConIdDAOImpl implements AsociacionConIdDAOCustom {
       }
     }
     
-    
+    if (!poseeFarmacia && !poseeOptica) {
+      for (NegocioConId negocio : negocios) {
+        asociacionesFiltradas.add(negocio.getAsociacion());
+      }
+      for (FarmaciaConId farmaciaEliminar : farmacias) {
+        asociacionesFiltradas.remove(farmaciaEliminar.getAsociacion());
+      }
+      for (OpticaConId opticaEliminar : opticas) {
+        asociacionesFiltradas.remove(opticaEliminar.getAsociacion());
+      }
+    }
 
     return asociacionesFiltradas;
   }
