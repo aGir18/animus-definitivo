@@ -12,8 +12,8 @@ import es.proyecto.animuslucrandi.entidades.AsociacionConId;
 @RepositoryRestResource(path = "asociaciones", itemResourceRel = "asociacion", collectionResourceRel = "asociaciones")
 public interface AsociacionConIdDAO extends JpaRepository<AsociacionConId, Long>, AsociacionConIdDAOCustom {
 
-  @RestResource(exported = false)
-  void delete(AsociacionConId asociacion);
+  // @RestResource(exported = false)
+  // void delete(AsociacionConId asociacion);
   
   @RestResource(path="por-nombre")
   List<AsociacionConId> findByNombreIgnoreCase(@Param("nombre")String txt);
