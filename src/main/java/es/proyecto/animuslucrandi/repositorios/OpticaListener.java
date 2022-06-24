@@ -20,18 +20,19 @@ public class OpticaListener {
 	}
 	
 	@PrePersist
+	@PreUpdate
 	public void preGuardarOptica(OpticaConId opticaCreada) throws Exception {
 		if (opticaCreada.getNumeroAutorefractometros() < 0) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El número de autorefractometros no puede ser negativo");
 		}
 	}
 	
-	@PreUpdate
-	public void preActualizarOptica(OpticaConId opticaActualizada) throws Exception {
-		if (opticaActualizada.getNumeroAutorefractometros() < 0) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El número de autorefractometros no puede ser negativo");
-		}
-	}
+	// @PreUpdate
+	// public void preActualizarOptica(OpticaConId opticaActualizada) throws Exception {
+	// 	if (opticaActualizada.getNumeroAutorefractometros() < 0) {
+	// 		throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El número de autorefractometros no puede ser negativo");
+	// 	}
+	// }
 	
 	
 }

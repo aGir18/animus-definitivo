@@ -22,17 +22,18 @@ public class FarmaciaListener {
 	}
 	
 	@PrePersist
+	@PreUpdate
 	public void preGuardarFarmacia(FarmaciaConId farmaciaCreada) throws Exception {
 		if (farmaciaCreada.getNumeroPuntosSigre() < 0) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El número de puntos SIGRE no puede ser negativo");
 		}
 	}
 	
-	@PreUpdate
-	public void preActualizarFarmacia(FarmaciaConId farmaciaActualizada) throws Exception {
-		if (farmaciaActualizada.getNumeroPuntosSigre() < 0) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El número de puntos SIGRE no puede ser negativo");
-		}
-	}
+	// @PreUpdate
+	// public void preActualizarFarmacia(FarmaciaConId farmaciaActualizada) throws Exception {
+	// 	if (farmaciaActualizada.getNumeroPuntosSigre() < 0) {
+	// 		throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El número de puntos SIGRE no puede ser negativo");
+	// 	}
+	// }
 	
 }
